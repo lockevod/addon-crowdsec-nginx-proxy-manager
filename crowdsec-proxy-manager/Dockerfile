@@ -6,7 +6,7 @@ FROM ${BUILD_FROM}
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Copy Bouncer
-COPY crowdsec-bouncer/ /tmp/
+ADD crowdsec-bouncer/ /tmp/
 
 RUN \
     apk add --no-cache --virtual .build-dependencies \
