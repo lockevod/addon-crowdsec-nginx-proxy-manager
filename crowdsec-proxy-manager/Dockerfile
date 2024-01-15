@@ -14,7 +14,7 @@ RUN \
         lua5.1-dev=5.1.5-r13 \
     \
     && apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing \
-        crowdsec=1.1.1-r0 \
+        crowdsec=1.5.5-r0 \
     && apk add --no-cache \
         lua5.1=5.1.5-r13  \
         luarocks=3.9.2-r1 \
