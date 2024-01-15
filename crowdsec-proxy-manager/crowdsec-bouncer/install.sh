@@ -17,32 +17,15 @@ usage() {
       exit 0  
 }
 
-
-#Accept cmdline arguments to overwrite options.
-while [[ $# -gt 0 ]]
-do
-    case $1 in
-        -y|--yes)
-            SILENT="true"
-            shift
-        ;;
-        -h|--help)
-            usage
-        ;;
-    esac
-    shift
-done
-
-
 gen_apikey() {
     
     type cscli > /dev/null
 
     if [ "$?" -eq "0" ] ; then
-        SUFFIX=`tr -dc A-Za-z0-9 </dev/urandom | head -c 8`
+        SUFFIX=$(tr -dc A-Za-z0-9 </dev/urandom | head -c 8)
         API_KEY="cscli bouncers add crowdsec-nginx-bouncer-${SUFFIX} -o raw"
         PORT=$(cscli config show --key "Config.API.Server.ListenURI"|cut -d ":" -f2)
-        if [ ! -n "$PORT" ]; then
+        if [ ! -z "$PORT" ]; then
             LAPI_DEFAULT_PORT=${PORT}
         fi
         echo "Bouncer registered to the CrowdSec Local API."
