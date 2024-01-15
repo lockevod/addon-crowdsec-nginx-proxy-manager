@@ -26,8 +26,8 @@ RUN \
     && ln -s /usr/bin/luarocks-5.1 /usr/bin/luarocks \
     \
     && /tmp/crowdsec-bouncer/install.sh \
-    && cd /var/lib/nginx \
-    && ln -s /usr/lib/nginx/modules ./ \
+    && mkdir -p /var/lib/nginx/modules \
+    && cp /usr/lib/nginx/modules/* /var/lib/nginx/modules/ \
     && apk del --purge .build-dependencies \
     && rm -f -r \
         /tmp/crowdsec-bouncer 
