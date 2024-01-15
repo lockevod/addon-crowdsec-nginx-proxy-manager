@@ -8,6 +8,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Copy Bouncer
 RUN mkdir -p /tmp/crowdsec-bouncer
 COPY crowdsec-bouncer/ /tmp/crowdsec-bouncer/
+RUN ls -la /tmp/crowdsec-bouncer
 
 RUN \
     apk add --no-cache --virtual .build-dependencies \

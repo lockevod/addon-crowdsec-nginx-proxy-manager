@@ -1,6 +1,5 @@
 #!/bin/bash
 
-LUA_MOD_DIR="./lua-mod"
 NGINX_CONF="crowdsec_nginx.conf"
 NGINX_CONF_DIR="/etc/nginx/conf.d/"
 
@@ -8,14 +7,6 @@ LIB_PATH="/usr/local/lua/crowdsec/"
 CONFIG_PATH="/etc/crowdsec/bouncers/"
 DATA_PATH="/var/lib/crowdsec/lua/"
 LAPI_DEFAULT_PORT="8080"
-
-usage() {
-      echo "Usage:"
-      echo "    ./install.sh -h                 Display this help message."
-      echo "    ./install.sh                    Install the bouncer in interactive mode"
-      echo "    ./install.sh -y                 Install the bouncer and accept everything"
-      exit 0  
-}
 
 gen_apikey() {
     
@@ -35,9 +26,9 @@ install() {
     mkdir -p ${LIB_PATH}/plugins/crowdsec/
     mkdir -p ${DATA_PATH}/templates/
 
-    cp nginx/${NGINX_CONF} ${NGINX_CONF_DIR}/${NGINX_CONF}
-    cp -r ${LUA_MOD_DIR}/lib/* ${LIB_PATH}/
-    cp -r ${LUA_MOD_DIR}/templates/* ${DATA_PATH}/templates/
+    cp /tmp/crowdsec-bouncer/nginx/${NGINX_CONF} ${NGINX_CONF_DIR}/${NGINX_CONF}
+    cp -r /tmp/crowdsec-bouncer/lua-mod/lib/* ${LIB_PATH}/
+    cp -r /tmp/crowdsec-bouncer/lua-mod/templates/* ${DATA_PATH}/templates/
 
     luarocks install lua-resty-http
     luarocks install lua-cjson
