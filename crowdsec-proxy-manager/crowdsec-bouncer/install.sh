@@ -19,19 +19,13 @@ usage() {
 
 gen_apikey() {
     
-    type cscli > /dev/null
-
-    if [ "$?" -eq "0" ] ; then
-        SUFFIX=$(tr -dc A-Za-z0-9 </dev/urandom | head -c 8)
-        API_KEY="cscli bouncers add crowdsec-nginx-bouncer-${SUFFIX} -o raw"
-        PORT=$(cscli config show --key "Config.API.Server.ListenURI"|cut -d ":" -f2)
-        if [ ! -z "$PORT" ]; then
-            LAPI_DEFAULT_PORT=${PORT}
-        fi
-        echo "Bouncer registered to the CrowdSec Local API."
-    else
-        echo "cscli is not present, unable to register the bouncer to the CrowdSec Local API."
+    SUFFIX=$(tr -dc A-Za-z0-9 </dev/urandom | head -c 8)
+    API_KEY="cscli bouncers add crowdsec-nginx-bouncer-${SUFFIX} -o raw"
+    PORT=$(cscli config show --key "Config.API.Server.ListenURI"|cut -d ":" -f2)
+    if [ -n "$PORT" ]; then
+        LAPI_DEFAULT_PORT=${PORT}
     fi
+    
     CROWDSEC_LAPI_URL="http://127.0.0.1:${LAPI_DEFAULT_PORT}"
     mkdir -p "${CONFIG_PATH}"
     API_KEY=${API_KEY} CROWDSEC_LAPI_URL=${CROWDSEC_LAPI_URL} envsubst < ${LUA_MOD_DIR}/config_example.conf | tee -a "${CONFIG_PATH}crowdsec-nginx-bouncer.conf" >/dev/null
@@ -52,6 +46,3 @@ install() {
 
 gen_apikey
 install
-
-
-echo "crowdsec-nginx-bouncer installed successfully"
