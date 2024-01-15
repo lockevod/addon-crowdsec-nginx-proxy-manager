@@ -23,7 +23,7 @@ RUN \
     \
     && ln -s /usr/bin/luarocks-5.1 /usr/bin/luarocks \
     \
-    && bash /tmp/crowdsec-bouncer/install \
+    && bash /tmp/crowdsec-bouncer/install.sh \
     && cd /var/lib/nginx/ \
     && ln -s /usr/lib/nginx/modules ./ \
     #&& sed -i "s#user npm;#user root;#" /etc/nginx/nginx.conf \

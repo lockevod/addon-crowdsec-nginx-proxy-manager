@@ -3,12 +3,11 @@
 LUA_MOD_DIR="./lua-mod"
 NGINX_CONF="crowdsec_nginx.conf"
 NGINX_CONF_DIR="/etc/nginx/conf.d/"
-ACCESS_FILE="access.lua"
+
 LIB_PATH="/usr/local/lua/crowdsec/"
 CONFIG_PATH="/etc/crowdsec/bouncers/"
 DATA_PATH="/var/lib/crowdsec/lua/"
 LAPI_DEFAULT_PORT="8080"
-SILENT="false"
 
 usage() {
       echo "Usage:"
@@ -41,9 +40,9 @@ gen_apikey() {
 
     if [ "$?" -eq "0" ] ; then
         SUFFIX=`tr -dc A-Za-z0-9 </dev/urandom | head -c 8`
-        API_KEY=`cscli bouncers add crowdsec-nginx-bouncer-${SUFFIX} -o raw`
+        API_KEY="cscli bouncers add crowdsec-nginx-bouncer-${SUFFIX} -o raw"
         PORT=$(cscli config show --key "Config.API.Server.ListenURI"|cut -d ":" -f2)
-        if [ ! -z "$PORT" ]; then
+        if [ ! -n "$PORT" ]; then
             LAPI_DEFAULT_PORT=${PORT}
         fi
         echo "Bouncer registered to the CrowdSec Local API."
