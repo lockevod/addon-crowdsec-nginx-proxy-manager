@@ -23,17 +23,10 @@ RUN \
     \
     && ln -s /usr/bin/luarocks-5.1 /usr/bin/luarocks \
     \
-    && bash /tmp/crowdsec-bouncer/install.sh \
+    && /tmp/crowdsec-bouncer/install.sh \
     && cd /var/lib/nginx \
     && ln -s /usr/lib/nginx/modules ./ \
-    #&& sed -i "s#user npm;#user root;#" /etc/nginx/nginx.conf \
-    #&& sed -i "s#root /app/frontend;#root /opt/nginx-proxy-manager/frontend;#" \
-    #    /etc/nginx/conf.d/production.conf \
-    #&& sed -i "s#table.string('id').notNull().primary();#table.string('id', 32).notNull().primary();#" \
-    #    /opt/nginx-proxy-manager/migrations/20190227065017_settings.js \
-    \
     && apk del --purge .build-dependencies \
-    \
     && rm -f -r \
         /tmp/crowdsec-bouncer 
 
