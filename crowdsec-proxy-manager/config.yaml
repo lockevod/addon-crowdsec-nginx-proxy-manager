@@ -17,5 +17,4 @@ ports:
 map:
   - addon_config:rw
 backup_exclude:
-  - '*/logs'
-  
+  - "*/logs"
